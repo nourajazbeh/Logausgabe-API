@@ -1,0 +1,15 @@
+{
+  "name": "logausgabe-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3",
+    "winston": "^3.12.0"
+  }
+}
