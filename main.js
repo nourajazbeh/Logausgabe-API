@@ -3,7 +3,7 @@ const winston = require('winston');
 
 const app = express();
 
-// Konfiguration des Loggers
+
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.json(),
@@ -13,26 +13,35 @@ const logger = winston.createLogger({
 });
 
 app.get('/info', (req, res) => {
-  logger.info('This is an info message');
-  res.send('Info message logged');
+  if (LOG_LEVEL === 'INFO' || LOG_LEVEL === 'DEBUG' || LOG_LEVEL === 'ERROR' || LOG_LEVEL === 'FATAL') {
+    logMessage('INFO', 'This is an info message');
+  }
+  res.send('Info route');
 });
 
 app.get('/debug', (req, res) => {
-  logger.debug('This is a debug message');
-  res.send('Debug message logged');
-});
+  if (LOG_LEVEL === 'DEBUG' || LOG_LEVEL === 'ERROR' || LOG_LEVEL === 'FATAL') {
+      logMessage('DEBUG', 'This is a debug message');
+    }
+    res.send('Debug route');
+  });
+
 
 app.get('/error', (req, res) => {
-  logger.error('This is an error message');
-  res.send('Error message logged');
-});
+  if (LOG_LEVEL === 'ERROR' || LOG_LEVEL === 'FATAL') {
+      logMessage('ERROR', 'This is an error message');
+    }
+    res.send('Error route');
+  });
 
 app.get('/fatal', (req, res) => {
-  logger.log('fatal', 'This is a fatal message');
-  res.send('Fatal message logged');
-});
-
+  if (LOG_LEVEL === 'fatal') {
+    logMessage('FATAL', 'This is a fatal message');
+  }
+  res.send('Fatal route');
+});   
+  
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server listening at http://localhost: ${PORT}`);
 });
